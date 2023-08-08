@@ -1,0 +1,281 @@
+{
+    "300ce902d7441d5c6c274be01bd5a564": {
+        "title": "A Watermark for Large Language Models",
+        "authors": [
+            "John Kirchenbauer",
+            "Jonas Geiping",
+            "Yuxin Wen",
+            "Jonathan Katz",
+            "Ian Miers",
+            "Tom Goldstein"
+        ],
+        "date": "2023/01/24",
+        "pdf": "https://arxiv.org/pdf/2301.10226",
+        "abstract": " Potential harms of large language models can be mitigated by watermarking\nmodel output, i.e., embedding signals into generated text that are invisible to\nhumans but algorithmically detectable from a short span of tokens. We propose a\nwatermarking framework for proprietary language models. The watermark can be\nembedded with negligible impact on text quality, and can be detected using an\nefficient open-source algorithm without access to the language model API or\nparameters. The watermark works by selecting a randomized set of &#34;green&#34; tokens\nbefore a word is generated, and then softly promoting use of green tokens\nduring sampling. We propose a statistical test for detecting the watermark with\ninterpretable p-values, and derive an information-theoretic framework for\nanalyzing the sensitivity of the watermark. We test the watermark using a\nmulti-billion parameter model from the Open Pretrained Transformer (OPT)\nfamily, and discuss robustness and security.\n"
+    },
+    "d352e19d20ad7755cee640c83e02adba": {
+        "title": "DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature",
+        "authors": [
+            "Eric Mitchell",
+            "Yoonho Lee",
+            "Alexander Khazatsky",
+            "Christopher D. Manning",
+            "Chelsea Finn"
+        ],
+        "date": "2023/01/26",
+        "pdf": "https://arxiv.org/pdf/2301.11305",
+        "abstract": " The increasing fluency and widespread usage of large language models (LLMs)\nhighlight the desirability of corresponding tools aiding detection of\nLLM-generated text. In this paper, we identify a property of the structure of\nan LLM&#39;s probability function that is useful for such detection. Specifically,\nwe demonstrate that text sampled from an LLM tends to occupy negative curvature\nregions of the model&#39;s log probability function. Leveraging this observation,\nwe then define a new curvature-based criterion for judging if a passage is\ngenerated from a given LLM. This approach, which we call DetectGPT, does not\nrequire training a separate classifier, collecting a dataset of real or\ngenerated passages, or explicitly watermarking generated text. It uses only log\nprobabilities computed by the model of interest and random perturbations of the\npassage from another generic pre-trained language model (e.g., T5). We find\nDetectGPT is more discriminative than existing zero-shot methods for model\nsample detection, notably improving detection of fake news articles generated\nby 20B parameter GPT-NeoX from 0.81 AUROC for the strongest zero-shot baseline\nto 0.95 AUROC for DetectGPT. See https://ericmitchell.ai/detectgpt for code,\ndata, and other project information.\n"
+    },
+    "ee5f7444d36e9c96485ca9308d641ee6": {
+        "title": "Can AI-Generated Text be Reliably Detected?",
+        "authors": [
+            "Vinu Sankar Sadasivan",
+            "Aounon Kumar",
+            "Sriram Balasubramanian",
+            "Wenxiao Wang",
+            "Soheil Feizi"
+        ],
+        "date": "2023/03/17",
+        "pdf": "https://arxiv.org/pdf/2303.11156",
+        "abstract": " In this paper, both empirically and theoretically, we show that several\nAI-text detectors are not reliable in practical scenarios. Empirically, we show\nthat paraphrasing attacks, where a light paraphraser is applied on top of a\nlarge language model (LLM), can break a whole range of detectors, including\nones using watermarking schemes as well as neural network-based detectors and\nzero-shot classifiers. Our experiments demonstrate that retrieval-based\ndetectors, designed to evade paraphrasing attacks, are still vulnerable to\nrecursive paraphrasing. We then provide a theoretical impossibility result\nindicating that as language models become more sophisticated and better at\nemulating human text, the performance of even the best-possible detector\ndecreases. For a sufficiently advanced language model seeking to imitate human\ntext, even the best-possible detector may only perform marginally better than a\nrandom classifier. Our result is general enough to capture specific scenarios\nsuch as particular writing styles, clever prompt design, or text paraphrasing.\nWe also extend the impossibility result to include the case where pseudorandom\nnumber generators are used for AI-text generation instead of true randomness.\nWe show that the same result holds with a negligible correction term for all\npolynomial-time computable detectors. Finally, we show that even LLMs protected\nby watermarking schemes can be vulnerable against spoofing attacks where\nadversarial humans can infer hidden LLM text signatures and add them to\nhuman-generated text to be detected as text generated by the LLMs, potentially\ncausing reputational damage to their developers. We believe these results can\nopen an honest conversation in the community regarding the ethical and reliable\nuse of AI-generated text.\n"
+    },
+    "f091e057733ce567ff967a4cf917faf0": {
+        "title": "MGTBench: Benchmarking Machine-Generated Text Detection",
+        "authors": [
+            "Xinlei He",
+            "Xinyue Shen",
+            "Zeyuan Chen",
+            "Michael Backes",
+            "Yang Zhang"
+        ],
+        "date": "2023/03/26",
+        "pdf": "https://arxiv.org/pdf/2303.14822",
+        "abstract": " Nowadays large language models (LLMs) have shown revolutionary power in a\nvariety of natural language processing (NLP) tasks such as text classification,\nsentiment analysis, language translation, and question-answering. In this way,\ndetecting machine-generated texts (MGTs) is becoming increasingly important as\nLLMs become more advanced and prevalent. These models can generate human-like\nlanguage that can be difficult to distinguish from text written by a human,\nwhich raises concerns about authenticity, accountability, and potential bias.\nHowever, existing detection methods against MGTs are evaluated under different\nmodel architectures, datasets, and experimental settings, resulting in a lack\nof a comprehensive evaluation framework across different methodologies In this paper, we fill this gap by proposing the first benchmark framework\nfor MGT detection, named MGTBench. Extensive evaluations on public datasets\nwith curated answers generated by ChatGPT (the most representative and powerful\nLLMs thus far) show that most of the current detection methods perform less\nsatisfactorily against MGTs. An exceptional case is ChatGPT Detector, which is\ntrained with ChatGPT-generated texts and shows great performance in detecting\nMGTs. Nonetheless, we note that only a small fraction of adversarial-crafted\nperturbations on MGTs can evade the ChatGPT Detector, thus highlighting the\nneed for more robust MGT detection methods. We envision that MGTBench will\nserve as a benchmark tool to accelerate future investigations involving the\nevaluation of state-of-the-art MGT detection methods on their respective\ndatasets and the development of more advanced MGT detection methods. Our source\ncode and datasets are available at https://github.com/xinleihe/MGTBench.\n"
+    },
+    "8b858aef3f93b2add657b801d011a5b3": {
+        "title": "Provable Robust Watermarking for AI-Generated Text",
+        "authors": [
+            "Xuandong Zhao",
+            "Prabhanjan Ananth",
+            "Lei Li",
+            "Yu-Xiang Wang"
+        ],
+        "date": "2023/06/30",
+        "pdf": "https://arxiv.org/pdf/2306.17439",
+        "abstract": " As AI-generated text increasingly resembles human-written content, the\nability to detect machine-generated text becomes crucial. To address this\nchallenge, we present GPTWatermark, a robust and high-quality solution designed\nto ascertain whether a piece of text originates from a specific model. Our\napproach extends existing watermarking strategies and employs a fixed group\ndesign to enhance robustness against editing and paraphrasing attacks. We show\nthat our watermarked language model enjoys strong provable guarantees on\ngeneration quality, correctness in detection, and security against evasion\nattacks. Experimental results on various large language models (LLMs) and\ndiverse datasets demonstrate that our method achieves superior detection\naccuracy and comparable generation quality in perplexity, thus promoting the\nresponsible use of LLMs.\n"
+    },
+    "c58b4eecd39f93bf26553a8220022acf": {
+        "title": "On the Reliability of Watermarks for Large Language Models",
+        "authors": [
+            "John Kirchenbauer",
+            "Jonas Geiping",
+            "Yuxin Wen",
+            "Manli Shu",
+            "Khalid Saifullah",
+            "Kezhi Kong",
+            "Kasun Fernando",
+            "Aniruddha Saha",
+            "Micah Goldblum",
+            "Tom Goldstein"
+        ],
+        "date": "2023/06/07",
+        "pdf": "https://arxiv.org/pdf/2306.04634",
+        "abstract": " As LLMs become commonplace, machine-generated text has the potential to flood\nthe internet with spam, social media bots, and valueless content. Watermarking\nis a simple and effective strategy for mitigating such harms by enabling the\ndetection and documentation of LLM-generated text. Yet a crucial question\nremains: How reliable is watermarking in realistic settings in the wild? There,\nwatermarked text may be modified to suit a user&#39;s needs, or entirely rewritten\nto avoid detection. We study the robustness of watermarked text after it is re-written by humans,\nparaphrased by a non-watermarked LLM, or mixed into a longer hand-written\ndocument. We find that watermarks remain detectable even after human and\nmachine paraphrasing. While these attacks dilute the strength of the watermark,\nparaphrases are statistically likely to leak n-grams or even longer fragments\nof the original text, resulting in high-confidence detections when enough\ntokens are observed. For example, after strong human paraphrasing the watermark\nis detectable after observing 800 tokens on average, when setting a 1e-5 false\npositive rate. We also consider a range of new detection schemes that are\nsensitive to short spans of watermarked text embedded inside a large document,\nand we compare the robustness of watermarking to other kinds of detectors.\n"
+    },
+    "1cc12db5be912979d655bec0d355f5e4": {
+        "title": "Who Wrote this Code? Watermarking for Code Generation",
+        "authors": [
+            "Taehyun Lee",
+            "Seokhee Hong",
+            "Jaewoo Ahn",
+            "Ilgee Hong",
+            "Hwaran Lee",
+            "Sangdoo Yun",
+            "Jamin Shin",
+            "Gunhee Kim"
+        ],
+        "date": "2023/05/24",
+        "pdf": "https://arxiv.org/pdf/2305.15060",
+        "abstract": " Large language models for code have recently shown remarkable performance in\ngenerating executable code. However, this rapid advancement has been\naccompanied by many legal and ethical concerns, such as code licensing issues,\ncode plagiarism, and malware generation, making watermarking machine-generated\ncode a very timely problem. Despite such imminent needs, we discover that\nexisting watermarking and machine-generated text detection methods for LLMs\nfail to function with code generation tasks properly. Hence, in this work, we\npropose a new watermarking method, SWEET, that significantly improves upon\nprevious approaches when watermarking machine-generated code. Our proposed\nmethod selectively applies watermarking to the tokens with high enough entropy,\nsurpassing a defined threshold. The experiments on code generation benchmarks\nshow that our watermarked code has superior quality compared to code produced\nby the previous state-of-the-art LLM watermarking method. Furthermore, our\nwatermark method also outperforms DetectGPT for the task of machine-generated\ncode detection.\n"
+    },
+    "b410b4db6a7b2db9e19a96d4fe4957c6": {
+        "title": "M4: Multi-generator, Multi-domain, and Multi-lingual Black-Box Machine-Generated Text Detection",
+        "authors": [
+            "Yuxia Wang",
+            "Jonibek Mansurov",
+            "Petar Ivanov",
+            "Jinyan Su",
+            "Artem Shelmanov",
+            "Akim Tsvigun",
+            "Chenxi Whitehouse",
+            "Osama Mohammed Afzal",
+            "Tarek Mahmoud",
+            "Alham Fikri Aji",
+            "Preslav Nakov"
+        ],
+        "date": "2023/05/24",
+        "pdf": "https://arxiv.org/pdf/2305.14902",
+        "abstract": " Large language models (LLMs) have demonstrated remarkable capability to\ngenerate fluent responses to a wide variety of user queries, but this has also\nresulted in concerns regarding the potential misuse of such texts in\njournalism, educational, and academic context. In this work, we aim to develop\nautomatic systems to identify machine-generated text and to detect potential\nmisuse. We first introduce a large-scale benchmark M4, which is\nmulti-generator, multi-domain, and multi-lingual corpus for machine-generated\ntext detection. Using the dataset, we experiment with a number of methods and\nwe show that it is challenging for detectors to generalize well on unseen\nexamples if they are either from different domains or are generated by\ndifferent large language models. In such cases, detectors tend to misclassify\nmachine-generated text as human-written. These results show that the problem is\nfar from solved and there is a lot of room for improvement. We believe that our\ndataset M4, which covers different generators, domains and languages, will\nenable future research towards more robust approaches for this pressing\nsocietal problem. The M4 dataset is available at\nhttps://github.com/mbzuai-nlp/M4.\n"
+    },
+    "acfe5eb2ac94411fa4a4256fe459eaa1": {
+        "title": "LLMDet: A Large Language Models Detection Tool",
+        "authors": [
+            "Kangxi Wu",
+            "Liang Pang",
+            "Huawei Shen",
+            "Xueqi Cheng",
+            "Tat-Seng Chua"
+        ],
+        "date": "2023/05/24",
+        "pdf": "https://arxiv.org/pdf/2305.15004",
+        "abstract": " With the advancement of generative language models, the generated text has\ncome remarkably close to high-quality human-authored text in terms of fluency\nand diversity. This calls for a highly practical detection tool that can\nidentify the source of text, preferably pinpointing the language model it\noriginates from. However, existing detection tools typically require access to\nlanguage models and can only differentiate between machine-generated and\nhuman-authored text, failing to meet the requirements of rapid detection and\ntext tracing. Therefore, in this paper, we propose an efficient, secure, and\nscalable detection tool called LLMDet, which calculates the proxy perplexity of\ntext by utilizing the prior information of the model&#39;s next-token\nprobabilities, obtained through pre-training. Subsequently, we use the\nself-watermarking information of the model, as measured by proxy perplexity, to\ndetect the source of the text. We found that our method demonstrates impressive\ndetection performance while ensuring speed and security, particularly achieving\na recognition accuracy of 97.97\\% for human-authored text. Furthermore, our\ndetection tool also shows promising results in identifying the large language\nmodel (e.g., GPT-2, OPT, LLaMA, Vicuna...) responsible for the text. We release\nthe code and processed data at \\url{https://github.com/TrustedLLM/LLMDet}.\n"
+    },
+    "457d303ab3cb64ff5936e1cb1a2e1be8": {
+        "title": "Deepfake Text Detection in the Wild",
+        "authors": [
+            "Yafu Li",
+            "Qintong Li",
+            "Leyang Cui",
+            "Wei Bi",
+            "Longyue Wang",
+            "Linyi Yang",
+            "Shuming Shi",
+            "Yue Zhang"
+        ],
+        "date": "2023/05/22",
+        "pdf": "https://arxiv.org/pdf/2305.13242",
+        "abstract": " Recent advances in large language models have enabled them to reach a level\nof text generation comparable to that of humans. These models show powerful\ncapabilities across a wide range of content, including news article writing,\nstory generation, and scientific writing. Such capability further narrows the\ngap between human-authored and machine-generated texts, highlighting the\nimportance of deepfake text detection to avoid potential risks such as fake\nnews propagation and plagiarism. However, previous work has been limited in\nthat they testify methods on testbed of specific domains or certain language\nmodels. In practical scenarios, the detector faces texts from various domains\nor LLMs without knowing their sources. To this end, we build a wild testbed by\ngathering texts from various human writings and deepfake texts generated by\ndifferent LLMs. Human annotators are only slightly better than random guessing\nat identifying machine-generated texts. Empirical results on automatic\ndetection methods further showcase the challenges of deepfake text detection in\na wild testbed. In addition, out-of-distribution poses a greater challenge for\na detector to be employed in realistic application scenarios. We release our\nresources at https://github.com/yafuly/DeepfakeTextDetect.\n"
+    },
+    "104c09f784a8715963e2315e2219f002": {
+        "title": "Smaller Language Models are Better Black-box Machine-Generated Text Detectors",
+        "authors": [
+            "Fatemehsadat Mireshghallah",
+            "Justus Mattern",
+            "Sicun Gao",
+            "Reza Shokri",
+            "Taylor Berg-Kirkpatrick"
+        ],
+        "date": "2023/05/17",
+        "pdf": "https://arxiv.org/pdf/2305.09859",
+        "abstract": " With the advent of fluent generative language models that can produce\nconvincing utterances very similar to those written by humans, distinguishing\nwhether a piece of text is machine-generated or human-written becomes more\nchallenging and more important, as such models could be used to spread\nmisinformation, fake news, fake reviews and to mimic certain authors and\nfigures. To this end, there have been a slew of methods proposed to detect\nmachine-generated text. Most of these methods need access to the logits of the\ntarget model or need the ability to sample from the target. One such black-box\ndetection method relies on the observation that generated text is locally\noptimal under the likelihood function of the generator, while human-written\ntext is not. We find that overall, smaller and partially-trained models are\nbetter universal text detectors: they can more precisely detect text generated\nfrom both small and larger models. Interestingly, we find that whether the\ndetector and generator were trained on the same data is not critically\nimportant to the detection success. For instance the OPT-125M model has an AUC\nof 0.81 in detecting ChatGPT generations, whereas a larger model from the GPT\nfamily, GPTJ-6B, has AUC of 0.45.\n"
+    },
+    "aa949221a3e1a684ed06abf035aa9403": {
+        "title": "Evading Watermark based Detection of AI-Generated Content",
+        "authors": [
+            "Zhengyuan Jiang",
+            "Jinghuai Zhang",
+            "Neil Zhenqiang Gong"
+        ],
+        "date": "2023/05/05",
+        "pdf": "https://arxiv.org/pdf/2305.03807",
+        "abstract": " A generative AI model -- such as DALL-E, Stable Diffusion, and ChatGPT -- can\ngenerate extremely realistic-looking content, posing growing challenges to the\nauthenticity of information. To address the challenges, watermark has been\nleveraged to detect AI-generated content. Specifically, a watermark is embedded\ninto an AI-generated content before it is released. A content is detected as\nAI-generated if a similar watermark can be decoded from it. In this work, we\nperform a systematic study on the robustness of such watermark-based\nAI-generated content detection. We focus on AI-generated images. Our work shows\nthat an attacker can post-process an AI-generated watermarked image via adding\na small, human-imperceptible perturbation to it, such that the post-processed\nAI-generated image evades detection while maintaining its visual quality. We\ndemonstrate the effectiveness of our attack both theoretically and empirically.\nMoreover, to evade detection, our adversarial post-processing method adds much\nsmaller perturbations to the AI-generated images and thus better maintain their\nvisual quality than existing popular image post-processing methods such as JPEG\ncompression, Gaussian blur, and Brightness/Contrast. Our work demonstrates the\ninsufficiency of existing watermark-based detection of AI-generated content,\nhighlighting the urgent needs of new detection methods.\n"
+    },
+    "2ef5f5950508ca0d429e59bda0f6d7bb": {
+        "title": "Watermarking Text Generated by Black-Box Language Models",
+        "authors": [
+            "Xi Yang",
+            "Kejiang Chen",
+            "Weiming Zhang",
+            "Chang Liu",
+            "Yuang Qi",
+            "Jie Zhang",
+            "Han Fang",
+            "Nenghai Yu"
+        ],
+        "date": "2023/05/14",
+        "pdf": "https://arxiv.org/pdf/2305.08883",
+        "abstract": " LLMs now exhibit human-like skills in various fields, leading to worries\nabout misuse. Thus, detecting generated text is crucial. However, passive\ndetection methods are stuck in domain specificity and limited adversarial\nrobustness. To achieve reliable detection, a watermark-based method was\nproposed for white-box LLMs, allowing them to embed watermarks during text\ngeneration. The method involves randomly dividing the model vocabulary to\nobtain a special list and adjusting the probability distribution to promote the\nselection of words in the list. A detection algorithm aware of the list can\nidentify the watermarked text. However, this method is not applicable in many\nreal-world scenarios where only black-box language models are available. For\ninstance, third-parties that develop API-based vertical applications cannot\nwatermark text themselves because API providers only supply generated text and\nwithhold probability distributions to shield their commercial interests. To\nallow third-parties to autonomously inject watermarks into generated text, we\ndevelop a watermarking framework for black-box language model usage scenarios.\nSpecifically, we first define a binary encoding function to compute a random\nbinary encoding corresponding to a word. The encodings computed for\nnon-watermarked text conform to a Bernoulli distribution, wherein the\nprobability of a word representing bit-1 being approximately 0.5. To inject a\nwatermark, we alter the distribution by selectively replacing words\nrepresenting bit-0 with context-based synonyms that represent bit-1. A\nstatistical test is then used to identify the watermark. Experiments\ndemonstrate the effectiveness of our method on both Chinese and English\ndatasets. Furthermore, results under re-translation, polishing, word deletion,\nand synonym substitution attacks reveal that it is arduous to remove the\nwatermark without compromising the original semantics.\n"
+    },
+    "200376360198e17f8ad102d3d081119c": {
+        "title": "Origin Tracing and Detecting of LLMs",
+        "authors": [
+            "Linyang Li",
+            "Pengyu Wang",
+            "Ke Ren",
+            "Tianxiang Sun",
+            "Xipeng Qiu"
+        ],
+        "date": "2023/04/27",
+        "pdf": "https://arxiv.org/pdf/2304.14072",
+        "abstract": " The extraordinary performance of large language models (LLMs) heightens the\nimportance of detecting whether the context is generated by an AI system. More\nimportantly, while more and more companies and institutions release their LLMs,\nthe origin can be hard to trace. Since LLMs are heading towards the time of\nAGI, similar to the origin tracing in anthropology, it is of great importance\nto trace the origin of LLMs. In this paper, we first raise the concern of the\norigin tracing of LLMs and propose an effective method to trace and detect\nAI-generated contexts. We introduce a novel algorithm that leverages the\ncontrastive features between LLMs and extracts model-wise features to trace the\ntext origins. Our proposed method works under both white-box and black-box\nsettings therefore can be widely generalized to detect various LLMs.(e.g. can\nbe generalized to detect GPT-3 models without the GPT-3 models). Also, our\nproposed method requires only limited data compared with the supervised\nlearning methods and can be extended to trace new-coming model origins. We\nconstruct extensive experiments to examine whether we can trace the origins of\ngiven texts. We provide valuable observations based on the experimental\nresults, such as the difficulty level of AI origin tracing, and the AI origin\nsimilarities, and call for ethical concerns of LLM providers. We are releasing\nall codes and data as a toolkit and benchmark for future AI origin tracing and\ndetecting studies. \\footnote{We are releasing all available resource at\n\\url{https://github.com/OpenLMLab/}.}\n"
+    },
+    "38e36e675c467924fac675360e2288c2": {
+        "title": "DetectLLM: Leveraging Log Rank Information for Zero-Shot Detection of Machine-Generated Text",
+        "authors": [
+            "Jinyan Su",
+            "Terry Yue Zhuo",
+            "Di Wang",
+            "Preslav Nakov"
+        ],
+        "date": "2023/05/23",
+        "pdf": "https://arxiv.org/pdf/2306.05540",
+        "abstract": " With the rapid progress of large language models (LLMs) and the huge amount\nof text they generated, it becomes more and more impractical to manually\ndistinguish whether a text is machine-generated. Given the growing use of LLMs\nin social media and education, it prompts us to develop methods to detect\nmachine-generated text, preventing malicious usage such as plagiarism,\nmisinformation, and propaganda. Previous work has studied several zero-shot\nmethods, which require no training data. These methods achieve good\nperformance, but there is still a lot of room for improvement. In this paper,\nwe introduce two novel zero-shot methods for detecting machine-generated text\nby leveraging the log rank information. One is called DetectLLM-LRR, which is\nfast and efficient, and the other is called DetectLLM-NPR, which is more\naccurate, but slower due to the need for perturbations. Our experiments on\nthree datasets and seven language models show that our proposed methods improve\nover the state of the art by 3.9 and 1.75 AUROC points absolute. Moreover,\nDetectLLM-NPR needs fewer perturbations than previous work to achieve the same\nlevel of performance, which makes it more practical for real-world use. We also\ninvestigate the efficiency--performance trade-off based on users preference on\nthese two measures and we provide intuition for using them in practice\neffectively. We release the data and the code of both methods in\nhttps://github.com/mbzuai-nlp/DetectLLM\n"
+    },
+    "d20e9ffabcd2afbfc45fb80762b765f7": {
+        "title": "Three Bricks to Consolidate Watermarks for Large Language Models",
+        "authors": [
+            "Pierre Fernandez",
+            "Antoine Chaffin",
+            "Karim Tit",
+            "Vivien Chappelier",
+            "Teddy Furon"
+        ],
+        "date": "2023/07/26",
+        "pdf": "https://arxiv.org/pdf/2308.00113",
+        "abstract": " The task of discerning between generated and natural texts is increasingly\nchallenging. In this context, watermarking emerges as a promising technique for\nascribing generated text to a specific model. It alters the sampling generation\nprocess so as to leave an invisible trace in the generated output, facilitating\nlater detection. This research consolidates watermarks for large language\nmodels based on three theoretical and empirical considerations. First, we\nintroduce new statistical tests that offer robust theoretical guarantees which\nremain valid even at low false-positive rates (less than 10$^{\\text{-6}}$).\nSecond, we compare the effectiveness of watermarks using classical benchmarks\nin the field of natural language processing, gaining insights into their\nreal-world applicability. Third, we develop advanced detection schemes for\nscenarios where access to the LLM is available, as well as multi-bit\nwatermarking.\n"
+    },
+    "a66b60cc18b136421894f16095b1842e": {
+        "title": "Towards Codable Text Watermarking for Large Language Models",
+        "authors": [
+            "Lean Wang",
+            "Wenkai Yang",
+            "Deli Chen",
+            "Hao Zhou",
+            "Yankai Lin",
+            "Fandong Meng",
+            "Jie Zhou",
+            "Xu Sun"
+        ],
+        "date": "2023/07/29",
+        "pdf": "https://arxiv.org/pdf/2307.15992",
+        "abstract": " As large language models (LLMs) generate texts with increasing fluency and\nrealism, there is a growing need to identify the source of texts to prevent the\nabuse of LLMs. Text watermarking techniques have proven reliable in\ndistinguishing whether a text is generated by LLMs by injecting hidden patterns\ninto the generated texts. However, we argue that existing watermarking methods\nfor LLMs are encoding-inefficient (only contain one bit of information -\nwhether it is generated from an LLM or not) and cannot flexibly meet the\ndiverse information encoding needs (such as encoding model version, generation\ntime, user id, etc.) in different LLMs application scenarios. In this work, we\nconduct the first systematic study on the topic of Codable Text Watermarking\nfor LLMs (CTWL) that allows text watermarks to carry more customizable\ninformation. First of all, we study the taxonomy of LLM watermarking technology\nand give a mathematical formulation for CTWL. Additionally, we provide a\ncomprehensive evaluation system for CTWL: (1) watermarking success rate, (2)\nrobustness against various corruptions, (3) coding rate of payload information,\n(4) encoding and decoding efficiency, (5) impacts on the quality of the\ngenerated text. To meet the requirements of these non-Pareto-improving metrics,\nwe devise a CTWL method named Balance-Marking, based on the motivation of\nensuring that available and unavailable vocabularies for encoding information\nhave approximately equivalent probabilities. Compared to the random vocabulary\npartitioning extended from the existing work, a probability-balanced vocabulary\npartition can significantly improve the quality of the generated text.\nExtensive experimental results have shown that our method outperforms a direct\nbaseline under comprehensive evaluation.\n"
+    },
+    "eab40610db53f983f9846db1acf7a142": {
+        "title": "A Private Watermark for Large Language Models",
+        "authors": [
+            "Aiwei Liu",
+            "Leyi Pan",
+            "Xuming Hu",
+            "Shu&#39;ang Li",
+            "Lijie Wen",
+            "Irwin King",
+            "Philip S. Yu"
+        ],
+        "date": "2023/07/30",
+        "pdf": "https://arxiv.org/pdf/2307.16230",
+        "abstract": " Recently, text watermarking algorithms for large language models (LLMs) have\nbeen mitigating the potential harms of text generated by the LLMs, including\nfake news and copyright issues. However, the watermark detection of current\ntext algorithms requires the key from the generation process, making them\nsusceptible to breaches and counterfeiting. In this work, we propose the first\nprivate watermarking algorithm, which extends the current text watermarking\nalgorithms by using two different neural networks respectively for watermark\ngeneration and detection, rather than using the same key at both stages.\nMeanwhile, part of the parameters of the watermark generation and detection\nnetworks are shared, which makes the detection network achieve a high accuracy\nvery efficiently. Experiments show that our algorithm ensures high detection\naccuracy with minimal impact on generation and detection speed, due to the\nsmall parameter size of both networks. Additionally, our subsequent analysis\ndemonstrates the difficulty of reverting the watermark generation rules from\nthe detection network.\n"
+    },
+    "7fbe286a6d142e5bd934ac27134d3050": {
+        "title": "Robust Distortion-free Watermarks for Language Models",
+        "authors": [
+            "Rohith Kuditipudi",
+            "John Thickstun",
+            "Tatsunori Hashimoto",
+            "Percy Liang"
+        ],
+        "date": "2023/07/28",
+        "pdf": "https://arxiv.org/pdf/2307.15593",
+        "abstract": " We propose a methodology for planting watermarks in text from an\nautoregressive language model that are robust to perturbations without changing\nthe distribution over text up to a certain maximum generation budget. We\ngenerate watermarked text by mapping a sequence of random numbers -- which we\ncompute using a randomized watermark key -- to a sample from the language\nmodel. To detect watermarked text, any party who knows the key can align the\ntext to the random number sequence. We instantiate our watermark methodology\nwith two sampling schemes: inverse transform sampling and exponential minimum\nsampling. We apply these watermarks to three language models -- OPT-1.3B,\nLLaMA-7B and Alpaca-7B -- to experimentally validate their statistical power\nand robustness to various paraphrasing attacks. Notably, for both the OPT-1.3B\nand LLaMA-7B models, we find we can reliably detect watermarked text ($p \\leq\n0.01$) from $35$ tokens even after corrupting between $40$-$50$\\% of the tokens\nvia random edits (i.e., substitutions, insertions or deletions). For the\nAlpaca-7B model, we conduct a case study on the feasibility of watermarking\nresponses to typical user instructions. Due to the lower entropy of the\nresponses, detection is more difficult: around $25\\%$ of the responses -- whose\nmedian length is around $100$ tokens -- are detectable with $p \\leq 0.01$, and\nthe watermark is also less robust to certain automated paraphrasing attacks we\nimplement.\n"
+    },
+    "9a66966c12835d85000a1573ee36aa1f": {
+        "title": "Protecting Language Generation Models via Invisible Watermarking",
+        "authors": [
+            "Xuandong Zhao",
+            "Yu-Xiang Wang",
+            "Lei Li"
+        ],
+        "date": "2023/02/06",
+        "pdf": "https://arxiv.org/pdf/2302.03162",
+        "abstract": " Language generation models have been an increasingly powerful enabler for\nmany applications. Many such models offer free or affordable API access, which\nmakes them potentially vulnerable to model extraction attacks through\ndistillation. To protect intellectual property (IP) and ensure fair use of\nthese models, various techniques such as lexical watermarking and synonym\nreplacement have been proposed. However, these methods can be nullified by\nobvious countermeasures such as &#34;synonym randomization&#34;. To address this issue,\nwe propose GINSEW, a novel method to protect text generation models from being\nstolen through distillation. The key idea of our method is to inject secret\nsignals into the probability vector of the decoding steps for each target\ntoken. We can then detect the secret message by probing a suspect model to tell\nif it is distilled from the protected one. Experimental results show that\nGINSEW can effectively identify instances of IP infringement with minimal\nimpact on the generation quality of protected APIs. Our method demonstrates an\nabsolute improvement of 19 to 29 points on mean average precision (mAP) in\ndetecting suspects compared to previous methods against watermark removal\nattacks.\n"
+    }
+}

@@ -1,20 +1,23 @@
 # -*- coding: utf-8 -*-
-# @author: lyh
-# @fileName: script.py
-# @date: 2023/4/8 2:55
-#
-# describe:
-#
-# @version 1.0 2023/4/8 2:55
-import os
+
 import json
+import os
 import re
 import warnings
 
+import requests
+from hashlib import md5
+
 PAPER_FOLDER = "papers"
+PARSED_FOLDER = "parsed"
 CSS_FILE = "src/style.css"
 CONFIG_FILE = "config.json"
 USE_CSS = False
+
+HEADERS = {}
+PROXY = None
+
+PARSED_DATA = []
 
 
 def read_json(file: str) -> dict:
@@ -24,11 +27,9 @@ def read_json(file: str) -> dict:
     return data
 
 
-def read_css(file: str) -> str:
-    f = open(file, 'r', encoding='utf-8')
-    data = f.read()
-    f.close()
-    return data
+def write_json(file: str, data: dict) -> None:
+    f = open(file, 'w+', encoding='utf-8')
+    json.dump(data, f, ensure_ascii=False, indent=4)
 
 
 def parse_cite(cite_str: str):
@@ -44,7 +45,8 @@ def parse_cite(cite_str: str):
     match = re.search(pattern, cite_str)
     yy, mm, dd = (match.group()[:2], match.group()[2:4], match.group()[-2:]) if match else ('', '', '')
     if match:
-        date = f'20{yy}.{mm}.{dd}'
+        dd = '01' if dd == '00' else dd
+        date = f'20{yy}/{mm}/{dd}'
     else:
         pattern = '(?<=year={).*(?=})|(?<=year = {).*(?=})'
         match = re.search(pattern, cite_str)
@@ -57,185 +59,47 @@ def parse_cite(cite_str: str):
     return {'title': title, 'url': url, 'date': date}
 
 
-def init_with_css():
-    css_text = """<style>
-    *,
-    *::before,
-    *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font: normal 16px/1.5 "Helvetica Neue", sans-serif;
-      background: #456990;
-      color: #fff;
-      overflow-x: hidden;
-      padding-bottom: 50px;
-    }  
-    
-    
-    /* INTRO SECTION
-    –––––––––––––––––––––––––––––––––––––––––––––––––– */
-    
-    .intro {
-      background: #F45B69;
-      padding: 100px 0;
-    }
-    
-    .container {
-      width: 90%;
-      max-width: 1200px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    
-    h1 {
-      font-size: 2.5rem;
-    }
-    
-    
-    /* TIMELINE
-    –––––––––––––––––––––––––––––––––––––––––––––––––– */
-    .timeline ul li {
-      list-style-type: none;
-      position: relative;
-      width: 6px;
-      margin: 0 auto;
-      padding-top: 50px;
-      background: #fff;
-    }
-    
-    .timeline ul li::after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%);
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background: inherit;
-    }
-    
-    .timeline ul li div {
-      position: relative;
-      bottom: 0;
-      width: 400px;
-      padding: 15px;
-      background: #F45B69;
-    }
-    
-    .timeline ul li div::before {
-      content: '';
-      position: absolute;
-      bottom: 7px;
-      width: 0;
-      height: 0;
-      border-style: solid;
-    }
-    
-    .timeline ul li:nth-child(odd) div {
-      left: 45px;
-    }
-    
-    .timeline ul li:nth-child(odd) div::before {
-      left: -15px;
-      border-width: 8px 16px 8px 0;
-      border-color: transparent #F45B69 transparent transparent;
-    }
-    
-    .timeline ul li:nth-child(even) div {
-      left: -439px;
-    }
-    
-    .timeline ul li:nth-child(even) div::before {
-      right: -15px;
-      border-width: 8px 0 8px 16px;
-      border-color: transparent transparent transparent #F45B69;
-    }
-    </style>
-    """
-    if os.path.exists(CSS_FILE):
-        css = read_css(CSS_FILE)
-        css_text = f"""<style>
-        {css}
-        </style>
-        """
+def parse_by_crawl(url: str):
+    try:
+        res = requests.get(url, proxies=PROXY if PROXY else None)
+    except Exception as e:
+        warnings.warn(f"something wrong when visit the url {url} ERROR:{str(e)}")
+        res = None
+    if res is not None and res.status_code == 200:
+        html_text = res.content.decode()
+
+        # title
+        pattern = '(?<=<meta name="citation_title" content=").*?(?=" />)'
+        match = re.search(pattern, html_text)
+        title = match.group() if match else ''
+
+        # authors
+        pattern = '(?<=<meta name="citation_author" content=").*?(?=" />)'
+        authors = re.findall(pattern, html_text)
+        authors = [f"{author.split(', ')[1]} {author.split(', ')[0]}" if len(author.split(', ')) == 2 else author
+                   for author in authors]
+
+        # date
+        pattern = '(?<=<meta name="citation_date" content=").*?(?=" />)'
+        match = re.search(pattern, html_text)
+        date = match.group() if match else ''
+
+        # pdf
+        pattern = '(?<=<meta name="citation_pdf_url" content=").*?(?=" />)'
+        match = re.search(pattern, html_text)
+        pdf = match.group() if match else ''
+
+        # abs
+        pattern = '(?<=<meta name="citation_abstract" content=").*?(?=" />)'
+        match = re.search(pattern, html_text, re.S)
+        abstract = match.group() if match else ''
     else:
-        warnings.warn("can not find css file: {}".format(CSS_FILE))
-        css = ''
-    if os.path.exists(CONFIG_FILE):
-        config = read_json(CONFIG_FILE)
-    else:
-        config = {}
-
-    title = config.get('repo')
-    description = config.get('description')
-
-    line_head = f"""
-    <section class="intro">
-      <div class="container">
-        <h1>{title}</h1>
-        {description}
-      </div>
-    </section>
-    """
-    line_body = []
-    if not os.path.exists('papers'):
-        pass
-    else:
-        files = os.listdir('papers')
-        files = sorted(files, reverse=True)
-        for file in files:
-            if file.endswith('.json'):
-                datas = read_json(os.path.join(PAPER_FOLDER, file))
-                for data in datas:
-                    parsed = parse_cite(data.get('cite', ''))
-                    title = parsed.get('title')
-                    if not title:
-                        warnings.warn("can not parse data: {}".format(data))
-                        continue
-                    year = parsed.get('year', '')
-                    url = parsed.get('url') if parsed.get('url') else data.get('url')
-                    code = data.get('code')
-                    if url:
-                        url_tag = f'<a href="{url}">[paper]</a>'
-                    else:
-                        url_tag = '<p>[paper]</p>'
-                    if code:
-                        code_tag = f'<a href="{code}">[code]</a>'
-                    else:
-                        code_tag = '[code]'
-                    item = f"""<li><div><time>[{year}]</time> {title} | {url_tag} | {code_tag}</div></li>"""
-                    line_body.append(item)
-
-            else:
-                continue
-    line_body_str = '\n'.join(line_body)
-    line_body_str = f"""
-    <section class="timeline">
-      <ul>
-      {line_body_str}
-      </ul>
-    </section>
-    """
-    time_line = f"""
-    {line_head}
-    
-    {line_body_str}
-    """
-
-    md_text = f"""
-    {css_text}
-    
-    {time_line}
-    """
-
-    with open('README.md', 'w', encoding='utf-8') as f:
-        f.write(md_text)
-        f.close()
+        title = ''
+        authors = []
+        date = ''
+        pdf = ''
+        abstract = ''
+    return {'title': title, 'authors': authors, 'date': date, 'pdf': pdf, 'abstract': abstract}
 
 
 def init():
@@ -244,8 +108,8 @@ def init():
     else:
         config = {}
 
-    title = config.get('repo')
-    description = config.get('description')
+    title = config.get('repo', '')
+    description = config.get('description', '')
     all_list = []
     line_head = f"""# {title}\n{description}\n\n---"""
     if not os.path.exists('papers'):
@@ -254,22 +118,38 @@ def init():
         files = os.listdir('papers')
         files = sorted(files, reverse=True)
         for file in files:
+            print(f"parse file: {file}")
             pattern = '.*(?=.json)'
             match = re.search(pattern, file)
             list_title = match.group() if match else 'Paper List'
             list_block = []
             if file.endswith('.json'):
                 datas = read_json(os.path.join(PAPER_FOLDER, file))
+                if os.path.exists(f"{PARSED_FOLDER}/{file}"):
+                    stored_datas = read_json(f"{PARSED_FOLDER}/{file}")
+                else:
+                    stored_datas = {}
                 parsed_datas = []
                 for data in datas:
-                    parsed = parse_cite(data.get('cite', ''))
+                    print(f"parse data: {json.dumps(data)}")
+                    url = data.get('url', '')
+                    parsed = {}
+                    if url:
+                        parsed = stored_datas.get(md5(url.encode()).hexdigest(), {})
+                    if not parsed and isinstance(url, str) and url.startswith('https://arxiv.org/abs/'):
+                        parsed = parse_by_crawl(url)
+                        if parsed:
+                            stored_datas.update({md5(url.encode()).hexdigest(): parsed})
+                    if not parsed:
+                        parsed = parse_cite(data.get('cite', ''))
+
                     title = parsed.get('title')
                     if not title:
                         warnings.warn("can not parse data: {}".format(data))
                         continue
-                    year = parsed.get('date', '')
+                    date = parsed.get('date', '')
                     url = data.get('url') if data.get('url') else parsed.get('url')
-                    code = data.get('code')
+                    code = data.get('code') if data.get('code') else parsed.get('code')
                     if url:
                         url_tag = f'[[paper]]({url})'
                     else:
@@ -278,15 +158,18 @@ def init():
                         code_tag = f'[[code]]({code})'
                     else:
                         code_tag = '[code]'
-                    parsed_datas.append({'year': year, 'title': title, 'url': url_tag, 'code': code_tag})
-                parsed_datas = sorted(parsed_datas, key=lambda x: x.get('year', ''), reverse=True)
+                    parsed_datas.append({'date': date, 'title': title, 'url': url_tag, 'code': code_tag})
+                parsed_datas = sorted(parsed_datas, key=lambda x: x.get('date', ''), reverse=True)
                 for data in parsed_datas:
-                    year = data.get('year')
+                    date = data.get('date')
                     title = data.get('title')
                     url_tag = data.get('url')
                     code_tag = data.get('code')
-                    item = f"""\t- [{year}] *{title}* | {url_tag} | {code_tag}\n"""
+                    item = f"""\t- [{date}] *{title}* | {url_tag} | {code_tag}\n"""
                     list_block.append(item)
+                if not os.path.exists(PARSED_FOLDER):
+                    os.mkdir(PARSED_FOLDER)
+                write_json(f"{PARSED_FOLDER}/{file}",stored_datas)
 
             else:
                 continue
